@@ -1,14 +1,21 @@
 pipeline {
-    //agent none
+   
 	agent any
+	tools {
+	maven 'LocalMaven'
+	jdk 'LocalJDK8'
+	}
+	triggers {
+	pollSCM('* * * * 1-5')
+	}
     stages {
 	
-	stage('Non-Parallel Stage') {
-	    /*agent {
-                        label "master"
-                }*/
+	stage('JOB01') {
+	   
         steps {
                 echo 'This stage will be executed first'
+		git 'https://github.com/Jorge-MG/Pipeline_Script.git'
+		bat 'mvn clean test'
                 }
         }
 
